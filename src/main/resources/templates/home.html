@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Home!</title>
+    </head>
+    <body>
+
+        <h1>Home!</h1>
+        <h2>Post notes below</h2>
+
+            <p th:each="note : ${notes}">
+            <span th:utext="${note.getContent()}">Note!</span>
+        </p>
+        
+        <form th:action="@{/home}" method="POST">
+            <input type="text" name="content"/>
+            <input type="submit"/>
+        </form>
+    </body>
+</html>
