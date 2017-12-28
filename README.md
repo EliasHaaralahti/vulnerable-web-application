@@ -3,10 +3,10 @@
 
 - This application will have at least five vulnerabilities from the OWASP top ten list (https://www.owasp.org/index.php/Top_10_2013-Top_10). Also each vulnerability will have instructions on identifying and fixing it.
 
-# OWASP top 10 vulnerabilities (https://www.owasp.org/index.php/Top_10_2013-Top_10)
+## OWASP top 10 vulnerabilities (https://www.owasp.org/index.php/Top_10_2013-Top_10)
 ## Vulnerability 1
-### How this vulnerability can be identified?
-
+* How this vulnerability can be identified?
+** Explanation
 ### How this vulnerability can be fixed?
 
 ## Vulnerability 2
