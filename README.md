@@ -1,7 +1,7 @@
 # Vulnerable-web-application
 ## Course project for Cyber Security Base with F-Secure by University of Helsinki
 
-- This application will have at least five vulnerabilities from the [OWASP top ten vulnerabilities](https://www.owasp.org/index.php/Top_10_2013-Top_10). Each vulnerability will have instructions for identifying and fixing them.
+- This application will have at least five vulnerabilities from the [OWASP top ten vulnerabilities list](https://www.owasp.org/index.php/Top_10_2013-Top_10). Each vulnerability will have instructions for identifying and fixing them.
 
 ## Vulnerability 1
 ### How this vulnerability can be identified?
