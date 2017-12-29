@@ -15,14 +15,14 @@
 ### How this vulnerability can be fixed?
 * With Thymeleaf to fix this vulnerability you just need to change th:utext to th:text. Other ways of fixing include sanitizing and escaping the input.
 
-## A8-Cross-Site Request Forgery (CSRF) (Not yet implemented, as no sessions exist yet)
+## A8-Cross-Site Request Forgery (CSRF)
 ### How this vulnerability can be identified?
-* While logged in, open the csrf.html file in folder external-resources using the same browser. In the input field write your note and then submit. The note will now be stored and displayed to be posted by the active user.
+* While logged in, open the csrf.html file in folder external-resources using the same browser. In the input field write your note and then submit. The note will now be stored and displayed to be posted by the active user. This vulnerability can also use the XSS vulnerability mentioned above.
 ### How this vulnerability can be fixed?
 * A CSRF token has to be added to prevent CSRF attacks. In Spring this can be done automatically using the Spring security framework by adding line "http.csrf();" inside the security configurate function. It will then automatically add a CSRF token when needed.
 
 ## Other: Brute-force attacks
 ### How this vulnerability can be identified?
-* As no security exists to prevents trying to login multiple times, any brute-force attack types should work
+* As no security exists to prevents trying to login multiple times, any brute-force attack types can be used to get the login credentials.
 ### How this vulnerability can be fixed?
 * There are many methods to block brute-force attacks, perhaps the simplest way would be adding a CAPTCHA after multiple attempts.
