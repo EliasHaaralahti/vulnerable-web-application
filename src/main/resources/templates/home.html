@@ -4,16 +4,23 @@
         <title>Home!</title>
     </head>
     <body>
+        <p>Logged in as: <span th:text="${userName}">Note!</span></p>
+        
         <h1>Home!</h1>
         <h2>Post notes below</h2>
 
         <p th:each="note : ${notes}">
-            <span th:utext="${note.getContent()}">Note!</span>
+            <span th:utext="${note.getContent()}">Note</span>
+            - Created by <span th:text="${note.getCreator()}">Creator</span>
         </p>
         
         <form th:action="@{/home}" method="POST">
             <input type="text" name="content"/>
-            <input type="submit"/>
+            <input type="submit" value="Post"/>
+        </form>
+        
+        <form action="/logout" method="get">
+            <input type="submit" value="Logout"/>
         </form>
     </body>
 </html>
