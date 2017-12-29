@@ -1,34 +1,28 @@
 # Vulnerable-web-application
 ## Course project for Cyber Security Base with F-Secure by University of Helsinki
 
-- This application will have at least five vulnerabilities from the [OWASP top ten vulnerabilities list](https://www.owasp.org/index.php/Top_10_2013-Top_10). Each vulnerability will have instructions for identifying and fixing them.
+- This application allows you to create notes that everyone can see after logging in, it will have at least five vulnerabilities from the [OWASP top ten vulnerabilities list](https://www.owasp.org/index.php/Top_10_2013-Top_10). Each vulnerability will have instructions for identifying and fixing them.
 
-## Vulnerability 1
+## A1-Injection
 ### How this vulnerability can be identified?
-* Explanation to identify
+* This is a SQL injection vulnerability in the login form. To manually exploit this vulnerability, the easiest way is by inputting any name and in the password field typing something like "NotRealPass'OR'1'='1". This will log the user in as whatever is the first queried account. More specific queries can also be made for specific accounts.
 ### How this vulnerability can be fixed?
-* Explanation to fix
+* Fixing this problem would be easy using Spring repositories, as used for every other query in this application. Other ways could be parameterized SQL queries or escaping all user input.
 
-## Vulnerability 2
+## A3-Cross-Site Scripting (XSS)
 ### How this vulnerability can be identified?
-* Explanation to identify
+* When creating a note on the home page, JavaScript can be written as a part of the message, it is then sent to the browser of whoever views the note. Example of this is: "MyNote<script>console.log("message");</script>".
 ### How this vulnerability can be fixed?
-* Explanation to fix
+* With Thymeleaf to fix this vulnerability you just need to change th:utext to th:text. Other ways of fixing include sanitizing and escaping the input.
 
-## Vulnerability 3
+## A8-Cross-Site Request Forgery (CSRF) (Not yet implemented, as no sessions exist yet)
 ### How this vulnerability can be identified?
-* Explanation to identify
+* While logged in, open the csrf.html file in folder external-resources using the same browser. In the input field write your note and then submit. The note will now be stored and displayed to be posted by the active user.
 ### How this vulnerability can be fixed?
-* Explanation to fix
+* A CSRF token has to be added to prevent CSRF attacks. In Spring this can be done automatically using the Spring security framework by adding line "http.csrf();" inside the security configurate function. It will then automatically add a CSRF token when needed.
 
-## Vulnerability 4
+## Other: Brute-force attacks
 ### How this vulnerability can be identified?
-* Explanation to identify
+* As no security exists to prevents trying to login multiple times, any brute-force attack types should work
 ### How this vulnerability can be fixed?
-* Explanation to fix
-
-## Vulnerability 5
-### How this vulnerability can be identified?
-* Explanation to identify
-### How this vulnerability can be fixed?
-* Explanation to fix
+* There are many methods to block brute-force attacks, perhaps the simplest way would be adding a CAPTCHA after multiple attempts.
