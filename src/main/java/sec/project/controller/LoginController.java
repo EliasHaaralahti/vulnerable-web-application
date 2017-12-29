@@ -1,6 +1,8 @@
 package sec.project.controller;
 
+import java.sql.ResultSet;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,18 +28,24 @@ public class LoginController {
     
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String loginForm() {
+        if (accountRepository.count() == 0) {
+            accountRepository.save(new Account("Name", "Password"));
+        }
         return "loginForm";
     }
     
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String submitForm(@RequestParam String name, @RequestParam String password) {
-        
-        String sql = "INSERT INTO account (name) VALUES ('" + name + "')";
-        jdbcTemplate.execute(sql);
-        
-        Account account = accountRepository.findByName(name);
-        System.out.println("account name: " + account.getName() );
-        
+    public String submitForm(@RequestParam String name, @RequestParam String password) { 
+        // Unsafe SQL query. Example injection for password = Dunno'OR'1'='1'
+        String sql = 
+            "SELECT * FROM account WHERE name='" + name + "' AND password='" + password + "'";
+        System.out.println(sql);
+        Account account;
+        try {
+            account = (Account)jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper(Account.class));
+        } catch (Exception e) {
+            return "redirect:/login";
+        }
         return "redirect:/home";
   }
 }

@@ -33,5 +33,4 @@ public class NoteController {
         noteRepository.save( new Note(content) );
         return "redirect:/home";
     }
-
 }
