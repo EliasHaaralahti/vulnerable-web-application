@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Home!</title>
+    </head>
+    <body>        
+        <p><span th:utext="${note.getTitle()}">Note</span></p>
+
+	<p> <span th:utext="${note.getContent()}">Note</span> </p>
+        <p>- Created by <span th:text="${note.getCreator()}">Creator</span> </p>
+        
+        <form action="/home" method="get">
+            <input type="submit" value="Back"/>
+        </form>
+    </body>
+</html>
