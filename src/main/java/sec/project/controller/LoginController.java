@@ -27,10 +27,6 @@ public class LoginController {
     
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String loginForm() {
-        if (accountRepository.count() == 0) {
-            accountRepository.save(new Account("Name", "Password"));
-            accountRepository.save(new Account("User", "Password"));
-        }
         return "loginForm";
     }
     
@@ -38,17 +34,24 @@ public class LoginController {
     public String submitForm(HttpServletRequest request, HttpSession currentSession,
                     @RequestParam String name, @RequestParam String password) {         
         
+        // Temporary way of creating default accounts
+        if (accountRepository.count() == 0) {
+            accountRepository.save(new Account("Name", "Password"));
+            accountRepository.save(new Account("User", "Password"));
+        }
+        
         currentSession.invalidate();
         HttpSession session = request.getSession();        
             
-        // Unsafe SQL query. Example injection for password = Dunno'OR'1'='1'
-        String sql = 
-            "SELECT * FROM account WHERE name='" + name + "' AND password='" + password + "'";
+        // Unsafe SQL query. Example injection for password = pass'OR'1'='1
+        String sql = "SELECT * FROM account WHERE name='" + name +
+                "' AND (password='" + password + "')";
         
         Account account;
         try {
             account = (Account)jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper(Account.class));
         } catch (Exception e) {
+            System.out.println(sql);
             return "loginForm";
         }
         session.setAttribute("loggedUserName", account.getName());
