@@ -1,5 +1,7 @@
 package sec.project.controller;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,21 +20,31 @@ public class HomeController {
 
     @RequestMapping(value = "/home", method = RequestMethod.GET)
     public String loadForm(Model model, HttpSession session) {
-        if (session.getAttribute("loggedUserName") == null) {
+        String username = session.getAttribute("loggedUserName").toString();
+        if (username == null) {
             return "redirect:login";
         }
         
-        model.addAttribute("userName", session.getAttribute("loggedUserName"));
-        model.addAttribute("notes", noteRepository.findAll() );
+        List<Note> notes = noteRepository.findAll();
+        for (int i = 0; i < notes.size(); i++) {
+            Note note = notes.get(i);
+            if (!username.equals(note.getCreator()) && note.isHidden()) {
+                notes.remove(i);
+            }
+        }
+        
+        model.addAttribute("userName", username);
+        model.addAttribute("notes", notes );
         return "home";
     }
 
     @RequestMapping(value = "/home", method = RequestMethod.POST)
     public String submitForm(HttpSession session, @RequestParam String title,
-                                @RequestParam String content) {
+                    @RequestParam String content,
+                    @RequestParam(value = "hidden", required = false) boolean hidden) {
         
         String userName = session.getAttribute("loggedUserName").toString();
-        noteRepository.save( new Note(title, content, userName) );
+        noteRepository.save( new Note(title, content, userName, hidden) );
         return "redirect:/home";
     }
     

@@ -12,16 +12,18 @@ public class Note extends AbstractPersistable<Long> {
     private String content;
     private String creator;
     private String title;
+    private Boolean hidden;
 
     public Note() {
         super();
     }
 
-    public Note(String title, String content, String creator) {
+    public Note(String title, String content, String creator, Boolean hidden) {
         this();
+        this.title = title;
         this.content = content;
         this.creator = creator;
-        this.title = title;
+        this.hidden = hidden;
     }
 
     public String getContent() {
@@ -50,5 +52,9 @@ public class Note extends AbstractPersistable<Long> {
     
     public String getID() {
         return Long.toString(this.id);
+    }
+    
+    public Boolean isHidden() {
+        return this.hidden;
     }
 }
