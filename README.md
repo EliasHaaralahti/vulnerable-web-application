@@ -41,6 +41,12 @@ Owasp Zap steps:
 ### How this vulnerability can be fixed?
 * With Thymeleaf to fix this vulnerability you just need to change ```th:utext``` to ```th:text```. Other ways of fixing include sanitizing and escaping the input.
 
+## A4-Insecure Direct Object References
+### How this vulnerability can be identified?
+This application allows users to create notes that are hidden or visible to everyone. Hidden notes will only be shown to the user who created it. However notes are accessed using path /note/id and it does not implement any access control checks or other protection, so by guessing the ID number users are able to see hidden notes they are not supposed to. 
+### How this vulnerability can be fixed?
+To fix this access control should be implemented to the page to check if the user is authenticated to view the note.
+
 ## A5-Security Misconfiguration
 ### How this vulnerability can be identified?
 * The first part of this vulnerability if the obvious fact that CSRF is disabled, which makes this application vulnerable to A8-Cross-Site Request Forgery attacks. However the tricky part is that as get request security is not handled using the framework's security, but instead by checking the session attribute, each request has to be verified manually. This will likely cause issues during development.
